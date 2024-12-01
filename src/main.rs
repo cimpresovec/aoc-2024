@@ -1,10 +1,7 @@
-use std::fs;
+mod file_handling;
+mod day_01;
 
 fn main() {
-    let input_content = fs::read_to_string("input/day_01.txt")
-        .expect("File not found");
-
-    for line in input_content.lines() {
-        println!("{}", line);
-    }
+    println!("Day 01, solution 1: {}", day_01::first_puzzle());
+    println!("Day 01, solution 2: {}", day_01::second_puzzle());
 }
