@@ -17,7 +17,7 @@ pub fn second_puzzle() -> i32 {
     let reports = parse_reports();
 
     let mut safe_reports = 0;
-    for mut report in reports {
+    for report in reports {
         if is_report_safe(&report) {
             safe_reports += 1;
         } else {
@@ -45,6 +45,7 @@ pub fn second_puzzle() -> i32 {
 }
 
 fn is_report_safe(report: &Vec<i32>) -> bool {
+    // For marking if the Report is asc or desc
     let mut direction = 0;
 
     for i in 0..report.len() - 1 {
