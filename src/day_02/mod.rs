@@ -21,19 +21,13 @@ pub fn second_puzzle() -> i32 {
         if is_report_safe(&report) {
             safe_reports += 1;
         } else {
-            let mut sub_reports: Vec<Vec<i32>> = vec![];
             for i in 0..report.len() {
-                sub_reports.push(
-                    report
+               let sub_report =  report
                         .iter()
                         .enumerate()
-                        .filter(|e| e.0 != i)
-                        .map(|e| e.1.clone())
-                        .collect(),
-                );
-            }
-            for x in sub_reports {
-                if is_report_safe(&x) {
+                        .filter_map(|(idx, val)| if idx != i { Some(*val) } else { None })
+                        .collect();
+                if is_report_safe(&sub_report) {
                     safe_reports += 1;
                     break;
                 }
