@@ -55,7 +55,7 @@ fn parse_input() -> (Vec<i32>, Vec<i32>) {
 
 #[cfg(test)]
 mod tests {
-    use crate::day_01::{first_puzzle, second_puzzle};
+    use super::*;
 
     #[test]
     fn test_first_puzzle() {
