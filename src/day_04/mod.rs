@@ -121,11 +121,11 @@ mod tests {
     use super::*;
     #[test]
     fn test_first_puzzle() {
-        assert_eq!(first_puzzle(), 235);
+        assert_eq!(first_puzzle(), 2551);
     }
 
     #[test]
     fn test_second_puzzle() {
-        assert_eq!(second_puzzle(), 120);
+        assert_eq!(second_puzzle(), 1985);
     }
 }
