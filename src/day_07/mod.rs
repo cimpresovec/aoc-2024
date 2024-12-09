@@ -1,11 +1,79 @@
 use crate::file_handling;
+use itertools::{repeat_n, Itertools};
 use std::str::Split;
 
 pub fn first_puzzle() -> u64 {
     let equations = parse_input();
-    println!("{:?}", equations);
-    
-    1
+    let mut sum_of_valid: u64 = 0;
+
+    // println!("{:?}", equations);
+    let operators = vec!["+", "*"];
+    for equation in equations {
+        let perms =
+            repeat_n(operators.iter(), equation.numbers.len() - 1).multi_cartesian_product();
+
+        let mut calculates = false;
+        for perm in perms {
+            // println!("{:?}", perm);
+            if result_calculates(&equation, &perm) {
+                // println!("{} = {:?} {:?}", equation.result, equation.numbers, perm);
+                calculates = true;
+                break;
+            }
+        }
+
+        if calculates {
+            sum_of_valid += equation.result
+        }
+    }
+
+    sum_of_valid
+}
+
+pub fn second_puzzle() -> u64 {
+    let equations = parse_input();
+    let mut sum_of_valid: u64 = 0;
+
+    // println!("{:?}", equations);
+    let operators = vec!["+", "*", "||"];
+    for equation in equations {
+        let perms =
+            repeat_n(operators.iter(), equation.numbers.len() - 1).multi_cartesian_product();
+
+        let mut calculates = false;
+        for perm in perms {
+            if result_calculates(&equation, &perm) {
+                calculates = true;
+                break;
+            }
+        }
+
+        if calculates {
+            sum_of_valid += equation.result
+        }
+    }
+
+    sum_of_valid   
+}
+
+fn result_calculates(equation: &Equation, operators: &Vec<&&str>) -> bool {
+    let mut calculation: u64 = equation.numbers[0];
+
+    for i in 1..equation.numbers.len() {
+        if *operators[i-1] == "*" {
+            calculation *= equation.numbers[i];
+        } else if *operators[i-1] == "+" {
+            calculation += equation.numbers[i];
+        } else {
+            let concat = format!("{}{}", calculation, equation.numbers[i].to_string());
+            calculation = concat.parse::<u64>().unwrap();
+        }
+        if calculation > equation.result {
+            return false
+        }
+    }
+
+    calculation == equation.result
 }
 
 fn parse_input() -> Vec<Equation> {
@@ -38,6 +106,11 @@ mod tests {
 
     #[test]
     fn test_first_puzzle() {
-        assert_eq!(first_puzzle(), 1);
+        assert_eq!(first_puzzle(), 3119088655389);
+    }
+
+    #[test]
+    fn test_second_puzzle() {
+        assert_eq!(second_puzzle(), 264184041398847);
     }
 }

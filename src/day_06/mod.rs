@@ -52,6 +52,7 @@ pub fn first_puzzle() -> u32 {
     i
 }
 
+#[warn(dead_code)]
 fn print_grid(grid: &Vec<Vec<u8>>) {
     for y in 0..grid.len() {
         for x in 0..grid[y].len() {
